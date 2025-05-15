@@ -8,6 +8,9 @@ import (
 // 并不需要发Hhtp请求出去,纯粹是一个计算签名
 func (cli *Client) Deposit(req PayAsiaDepositReq) (map[string]interface{}, error) {
 
+	//补充一下
+	req.NotifyUrl = cli.DepositCallbackUrl
+
 	//构造请求(加签名)
 	paramMap := structs.Map(req)
 
