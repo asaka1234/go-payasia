@@ -1,11 +1,12 @@
-package go_mpay
+package go_payasia
 
 const (
-	BIZ_ID = "ahiahaih"   //商户id
-	SECRET = "haihaihaih" //秘钥
+	MERCHANT   = "ahiahaih"   //商户id
+	ACCESS_KEY = "haihaihaih" //秘钥
 
-	//deposit
-	BASE_URL = "https://pay.xagfgsm.com/order/post" //充值url
+	DEPOSIT_URL  = "https://payment.pa-sys.com" //充值url
+	WITHDRAW_URL = "https://payment.pa-sys.com" // 提现url
 
-	CALLBACK_URL = "http:/127.0.0.1" //充值回调地址
+	DEPOSIT_CALLBACK_URL  = "http://127.0.0.1/order/post" //充值回调url
+	WITHDRAW_CALLBACK_URL = "http://127.0.0.1/order/post" //提现回调url
 )

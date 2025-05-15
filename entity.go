@@ -1,61 +1,65 @@
-package go_mpay
-
-import (
-	"time"
-)
+package go_payasia
 
 // ----------pre order-------------------------
-type MPayDepositReq struct {
-	UserID      int64      `json:"userId"`      // 用户ID
-	PayAmount   float64    `json:"payAmount"`   // 支付金额
-	ID          int64      `json:"id"`          //业务订单id
-	PayUrl      string     `json:"payUrl"`      // 支付链接
-	PayCurrency string     `json:"payCurrency"` // 支付货币
-	UserName    string     `json:"userName"`    // 用户name
-	CreateTime  *time.Time `json:"createTime"`  //业务订单撞见时间
+
+// PayAsiaDepositReq
+type PayAsiaDepositReq struct {
+	MerchantReference string `json:"merchantReference"`
+	Currency          string `json:"currency"`
+	Amount            string `json:"amount"` // 使用string避免精度问题，对应Java的BigDecimal
+	CustomerIp        string `json:"customerIp"`
+	CustomerFirstName string `json:"customerFirstName"`
+	CustomerLastName  string `json:"customerLastName"`
+	CustomerPhone     string `json:"customerPhone"`
+	CustomerEmail     string `json:"customerEmail"`
+	Network           string `json:"network"`
+	NotifyUrl         string `json:"notify_url"` //回调url
+
+	Url  string `json:"url"` //请求url (该参数不参与sign计算)
+	Sign string `json:"sign"`
 }
 
 //------------------------------------------------------------
 
-type MPayDepositResponse struct {
-	Code float64 `json:"res"` // 1 是正确
-	Msg  string  `json:"msg"`
-	Ec   float64 `json:"ec"`
-	Data struct {
-		Fmt string `json:"fmt"`
-		Dtm string `json:"dtm"`
-		Lst string `json:"lst"`
-	} `json:"dt"`
+type PayAsiaWithdrawReq struct {
+	RequestReference     string `json:"requestReference"`
+	BeneficiaryName      string `json:"beneficiaryName"`
+	BeneficiaryFirstName string `json:"beneficiaryFirstName"`
+	BeneficiaryLastName  string `json:"beneficiaryLastName"`
+	BankName             string `json:"bankName"`
+	BeneficiaryEmail     string `json:"beneficiaryEmail"`
+	BeneficiaryPhone     string `json:"beneficiaryPhone"`
+	AccountNumber        string `json:"accountNumber"`
+	Currency             string `json:"currency"`
+	Amount               string `json:"amount"`
+	DatafeedUrl          string `json:"datafeed_url"` //回调url
+
+	Url  string `json:"url"` //请求url (该参数不参与sign计算)
+	Sign string `json:"sign"`
 }
 
 // ---------------callback-----------------------
-type MPayDepositBackReq struct {
-	OrderId     string `json:"orderId"`
-	Amount      string `json:"amount"`
-	OrderAmount string `json:"orderAmount"`
-	Currency    string `json:"currency"`
-	TradeTime   string `json:"tradeTime"`
-	Type        string `json:"type"`
-	Status      string `json:"status"`
-	// 算法：md5
-	// 内容：amount=200&currency=CNY&orderId=ES89760987
-	//&status=1&tradeTime=1541488344884&type=AlipayChannel
-	Sign string `json:"sign"`
-	Uuid string `json:"uuid"`
-	Key  string `json:"key"`
-	// 算法：md5
-	// 内容：amount=200&currency=CNY&orderId=ES89760987
-	//&status=0&tradeTime=1541488344884&type=AlipayChannel&key=RSA公钥+uuid
-	Signature string `json:"signature"`
-	// 算法：md5
-	// 内容：amount=200&currency=CNY&exAmount=2&exRate=7.0000000000&orderId=ES89760987&sourceCurrency=USD&status=0&tradeTime=1541488344884&type=AlipayChannel&key=RSA公钥+uuid
-	NSignature string `json:"_signature"`
-	TxID       string `json:"txid"`
-	Chain      string `json:"chain"`
-	BizId      string `json:"bizId"`
-	CustNo     string `json:"custNo"`
-	PayAddress string `json:"payAddress"`
-	ToAddress  string `json:"ToAddress"`
+type PayAsiaDepositBackReq struct {
+	Status            string `json:"status"`
+	MerchantReference string `json:"merchant_reference"` //商户订单id
+	RequestReference  string `json:"request_reference"`  // pspOrderNo
+	Currency          string `json:"currency"`
+	Amount            string `json:"amount"` // 使用 string 避免精度问题
+	Sign              string `json:"sign"`
 }
 
-//成功的话,返回 "{\"success\"}"
+type PayAsiaWithdrawBackReq struct {
+	BatchReference   string `json:"batch_reference"`
+	RequestReference string `json:"request_reference"`
+	Token            string `json:"token"`
+	BeneficiaryName  string `json:"beneficiary_name"`
+	BankName         string `json:"bank_name"`
+	AccountNumber    string `json:"account_number"`
+	OrderCurrency    string `json:"order_currency"`
+	OrderAmount      string `json:"order_amount"` // 使用字符串保持精度
+	Status           string `json:"status"`
+	FailReason       string `json:"fail_reason"`
+	CreatedTime      int64  `json:"created_time"`   // Unix 时间戳（毫秒）
+	CompletedTime    int64  `json:"completed_time"` // Unix 时间戳（毫秒）
+	Sign             string `json:"sign"`
+}

@@ -6,23 +6,24 @@ import (
 )
 
 // 并不需要发Hhtp请求出去,纯粹是一个计算签名
-func (cli *Client) Deposit(req PayAsiaDepositReq) (map[string]interface{}, error) {
+func (cli *Client) Withdraw(req PayAsiaWithdrawReq) (map[string]interface{}, error) {
 
 	//构造请求(加签名)
 	paramMap := structs.Map(req)
 
 	//拿到签名的部分
 	signKeyList := []string{
-		"merchant_reference",
+		"request_reference",
+		"beneficiary_name",
+		"beneficiary_first_name",
+		"beneficiary_last_name",
+		"bank_name",
+		"beneficiary_email",
+		"beneficiary_phone",
+		"account_number",
 		"currency",
 		"amount",
-		"customer_ip",
-		"customer_first_name",
-		"customer_last_name",
-		"customer_phone",
-		"customer_email",
-		"network",
-		"notify_url",
+		"datafeed_url",
 	}
 
 	//拿到签名map
