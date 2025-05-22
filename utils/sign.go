@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/samber/lo"
 	"github.com/spf13/cast"
+	"net/url"
 	"sort"
 )
 
@@ -16,23 +17,20 @@ func Sign(paramMap map[string]interface{}, accessKey string) string {
 	sort.Strings(keys)
 
 	//拼接签名原始字符串
-	rawString := ""
+	//rawString := ""
+	values := url.Values{}
 	lo.ForEach(keys, func(x string, index int) {
 		value := cast.ToString(paramMap[x])
-		rawString += fmt.Sprintf("%s=%s", x, URLDecodeSafe(value))
-
-		if index != len(keys)-1 {
-			//不是最后一个,则拼接
-			rawString += "&"
-		}
+		values.Add(x, value)
 	})
+	queryString := values.Encode()
 
 	// 3. 将secretKey拼接到最后
-	rawString += accessKey
+	queryString += accessKey
 
-	fmt.Printf("[rawString]%s\n", rawString)
+	fmt.Printf("[rawString]%s\n", queryString)
 
 	//4. 计算md5签名
-	signResult := SHA512(rawString)
+	signResult := SHA512(queryString)
 	return signResult
 }

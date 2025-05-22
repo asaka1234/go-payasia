@@ -6,8 +6,9 @@ import (
 )
 
 type Client struct {
-	Merchant  string
-	AccessKey string
+	MerchantID    string
+	MerchantToken string //更多类似applicationId
+	AccessKey     string //用来计算签名的
 
 	DepositUrl          string
 	WithdrawUrl         string
@@ -18,10 +19,11 @@ type Client struct {
 	logger   utils.Logger
 }
 
-func NewClient(logger utils.Logger, merchant string, accessKey string, depositUrl, withdrawUrl, depositCallbackUrl, withdrawCallbackUrl string) *Client {
+func NewClient(logger utils.Logger, merchantId string, merchantToken string, accessKey string, depositUrl, withdrawUrl, depositCallbackUrl, withdrawCallbackUrl string) *Client {
 	return &Client{
-		Merchant:  merchant,
-		AccessKey: accessKey,
+		MerchantID:    merchantId,
+		MerchantToken: merchantToken,
+		AccessKey:     accessKey,
 
 		DepositUrl:          depositUrl,
 		WithdrawUrl:         withdrawUrl,

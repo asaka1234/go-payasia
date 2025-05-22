@@ -2,19 +2,23 @@ package utils
 
 import (
 	"crypto/sha512"
-	"encoding/hex"
+	"fmt"
 )
 
 func SHA512(text string) string {
-	// 创建SHA512哈希对象
-	hasher := sha512.New()
+	return fmt.Sprintf("%x", sha512.Sum512([]byte(text)))
 
-	// 写入数据
-	hasher.Write([]byte(text))
+	/*
+		// 创建SHA512哈希对象
+		hasher := sha512.New()
 
-	// 计算哈希值
-	hashBytes := hasher.Sum(nil)
+		// 写入数据
+		hasher.Write([]byte(text))
 
-	// 转换为十六进制字符串
-	return hex.EncodeToString(hashBytes)
+		// 计算哈希值
+		hashBytes := hasher.Sum(nil)
+
+		// 转换为十六进制字符串
+		return hex.EncodeToString(hashBytes)
+	*/
 }
