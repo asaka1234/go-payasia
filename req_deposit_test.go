@@ -5,10 +5,26 @@ import (
 	"testing"
 )
 
-func TestDeposit(t *testing.T) {
+type VLog struct {
+}
 
+func (l VLog) Debugf(format string, args ...interface{}) {
+	fmt.Printf(format+"\n", args...)
+}
+func (l VLog) Infof(format string, args ...interface{}) {
+	fmt.Printf(format+"\n", args...)
+}
+func (l VLog) Warnf(format string, args ...interface{}) {
+	fmt.Printf(format+"\n", args...)
+}
+func (l VLog) Errorf(format string, args ...interface{}) {
+	fmt.Printf(format+"\n", args...)
+}
+
+func TestDeposit(t *testing.T) {
+	vLog := VLog{}
 	//构造client
-	cli := NewClient(nil, MERCHANT_ID, MERCHANT_TOKEN, SECRECT_CODE, DEPOSIT_URL, WITHDRAW_URL, DEPOSIT_CALLBACK_URL, WITHDRAW_CALLBACK_URL)
+	cli := NewClient(vLog, PayAsiaInitParams{MERCHANT_ID, MERCHANT_TOKEN, ACCESS_KEY, DEPOSIT_URL, WITHDRAW_URL, DEPOSIT_BACK_URL, WITHDRAW_BACK_URL})
 
 	//发请求
 	resp, err := cli.Deposit(GenDepositRequestDemo())

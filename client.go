@@ -6,29 +6,15 @@ import (
 )
 
 type Client struct {
-	MerchantID    string
-	MerchantToken string //更多类似applicationId
-	AccessKey     string //用来计算签名的
-
-	DepositUrl          string
-	WithdrawUrl         string
-	DepositCallbackUrl  string
-	WithdrawCallbackUrl string
+	Params PayAsiaInitParams
 
 	ryClient *resty.Client
 	logger   utils.Logger
 }
 
-func NewClient(logger utils.Logger, merchantId string, merchantToken string, accessKey string, depositUrl, withdrawUrl, depositCallbackUrl, withdrawCallbackUrl string) *Client {
+func NewClient(logger utils.Logger, params PayAsiaInitParams) *Client {
 	return &Client{
-		MerchantID:    merchantId,
-		MerchantToken: merchantToken,
-		AccessKey:     accessKey,
-
-		DepositUrl:          depositUrl,
-		WithdrawUrl:         withdrawUrl,
-		DepositCallbackUrl:  depositCallbackUrl,
-		WithdrawCallbackUrl: withdrawCallbackUrl,
+		Params: params,
 
 		ryClient: resty.New(), //client实例
 		logger:   logger,

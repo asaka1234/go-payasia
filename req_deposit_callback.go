@@ -15,7 +15,7 @@ func (cli *Client) DepositCallback(req PayAsiaDepositBackReq, processor func(Pay
 
 	sign := paramMap["sign"].(string) //收到的签名
 	delete(paramMap, "sign")
-	expectedSign := utils.Sign(paramMap, cli.AccessKey)
+	expectedSign := utils.Sign(paramMap, cli.Params.AccessKey)
 	if sign != expectedSign {
 		fmt.Println("签名验证失败")
 		return errors.New("sign verify failed!")

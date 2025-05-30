@@ -1,5 +1,15 @@
 package go_payasia
 
+type PayAsiaInitParams struct {
+	MerchantId      string `json:"merchantId" mapstructure:"merchantId" config:"merchantId"`          //商户号
+	MerchantToken   string `json:"merchantToken" mapstructure:"merchantToken" config:"merchantToken"` //applicationId
+	AccessKey       string `json:"accessKey" mapstructure:"accessKey" config:"accessKey"`
+	DepositUrl      string `json:"depositUrl" mapstructure:"depositUrl" config:"depositUrl"`
+	WithdrawUrl     string `json:"withdrawUrl" mapstructure:"withdrawUrl" config:"withdrawUrl"`
+	DepositBackUrl  string `json:"depositBackUrl" mapstructure:"depositBackUrl" config:"depositBackUrl"`    //充值回调
+	WithdrawBackUrl string `json:"withdrawBackUrl" mapstructure:"withdrawBackUrl" config:"withdrawBackUrl"` //提现回调
+}
+
 // ----------pre order-------------------------
 
 // PayAsiaDepositReq
