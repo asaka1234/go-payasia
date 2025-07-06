@@ -13,7 +13,8 @@ func (cli *Client) Deposit(req PayAsiaDepositReq) (map[string]interface{}, error
 
 	//补充公共字段
 	//paramMap := structs.Map(req)
-	paramMap["notify_url"] = cli.Params.DepositBackUrl //回调地址
+	//paramMap["notify_url"] = cli.Params.DepositBackUrl //回调地址
+	paramMap["return_url"] = cli.Params.DepositBackUrl //回调地址
 	paramMap["network"] = "DirectDebit"                //写死
 
 	signStr := utils.Sign(paramMap, cli.Params.AccessKey)
