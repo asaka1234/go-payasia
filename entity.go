@@ -54,26 +54,26 @@ type PayAsiaWithdrawReq struct {
 // Method : POST
 // Content-Type : application/x-www-form-urlencoded
 type PayAsiaDepositBackReq struct {
-	Status            string  `json:"status" mapstructure:"status"`
-	MerchantReference string  `json:"merchant_reference" mapstructure:"merchant_reference"` //商户订单id
-	RequestReference  string  `json:"request_reference" mapstructure:"request_reference"`   // pspOrderNo
-	Currency          string  `json:"currency" mapstructure:"currency"`
-	Amount            float64 `json:"amount" mapstructure:"amount"` // 使用 string 避免精度问题
-	Sign              string  `json:"sign" mapstructure:"sign"`     //对返回数据的签名
+	Status            string  `form:"status" json:"status" mapstructure:"status"`
+	MerchantReference string  `form:"merchant_reference" json:"merchant_reference" mapstructure:"merchant_reference"` //商户订单id
+	RequestReference  string  `form:"request_reference" json:"request_reference" mapstructure:"request_reference"`   // pspOrderNo
+	Currency          string  `form:"currency" json:"currency" mapstructure:"currency"`
+	Amount            float64 `form:"amount" json:"amount" mapstructure:"amount"` // 使用 string 避免精度问题
+	Sign              string  `form:"sign" json:"sign" mapstructure:"sign"`     //对返回数据的签名
 }
 
 type PayAsiaWithdrawBackReq struct {
-	Status           string `json:"status" mapstructure:"status"`
-	BatchReference   string `json:"batch_reference" mapstructure:"batch_reference"`
-	RequestReference string `json:"request_reference" mapstructure:"request_reference"`
-	Token            string `json:"token" mapstructure:"token"`
-	BeneficiaryName  string `json:"beneficiary_name" mapstructure:"beneficiary_name"`
-	BankName         string `json:"bank_name" mapstructure:"bank_name"`
-	AccountNumber    string `json:"account_number" mapstructure:"account_number"`
-	OrderCurrency    string `json:"order_currency" mapstructure:"order_currency"`
-	OrderAmount      string `json:"order_amount" mapstructure:"order_amount"` // 使用字符串保持精度
-	FailReason       string `json:"fail_reason" mapstructure:"fail_reason"`
-	CreatedTime      int64  `json:"created_time" mapstructure:"created_time"`     // Unix 时间戳（毫秒）
-	CompletedTime    int64  `json:"completed_time" mapstructure:"completed_time"` // Unix 时间戳（毫秒）
-	Sign             string `json:"sign" mapstructure:"sign"`
+	Status           string `form:"status" json:"status" mapstructure:"status"`
+	BatchReference   string `form:"batch_reference" json:"batch_reference" mapstructure:"batch_reference"`
+	RequestReference string `form:"request_reference" json:"request_reference" mapstructure:"request_reference"`
+	Token            string `form:"token" json:"token" mapstructure:"token"`
+	BeneficiaryName  string `form:"beneficiary_name" json:"beneficiary_name" mapstructure:"beneficiary_name"`
+	BankName         string `form:"bank_name" json:"bank_name" mapstructure:"bank_name"`
+	AccountNumber    string `form:"account_number" json:"account_number" mapstructure:"account_number"`
+	OrderCurrency    string `form:"order_currency" json:"order_currency" mapstructure:"order_currency"`
+	OrderAmount      string `form:"order_amount" json:"order_amount" mapstructure:"order_amount"` // 使用字符串保持精度
+	FailReason       string `form:"fail_reason" json:"fail_reason" mapstructure:"fail_reason"`
+	CreatedTime      int64  `form:"created_time" json:"created_time" mapstructure:"created_time"`     // Unix 时间戳（毫秒）
+	CompletedTime    int64  `form:"completed_time" json:"completed_time" mapstructure:"completed_time"` // Unix 时间戳（毫秒）
+	Sign             string `form:"sign" json:"sign" mapstructure:"sign"`
 }
