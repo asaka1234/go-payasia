@@ -2,11 +2,16 @@ package utils
 
 import (
 	"crypto/sha512"
-	"fmt"
+	"encoding/hex"
 )
 
 func SHA512(text string) string {
-	return fmt.Sprintf("%x", sha512.Sum512([]byte(text)))
+
+	hash := sha512.New()
+	hash.Write([]byte(text))
+	return hex.EncodeToString(hash.Sum(nil))
+
+	//return fmt.Sprintf("%x", sha512.Sum512([]byte(text)))
 
 	/*
 		// 创建SHA512哈希对象
