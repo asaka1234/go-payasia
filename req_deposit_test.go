@@ -39,7 +39,7 @@ func GenDepositRequestDemo() PayAsiaDepositReq {
 	return PayAsiaDepositReq{
 		MerchantReference: "1234567890", //商户的orderId
 		Currency:          "THB",
-		Amount:            600.00,            // 使用string避免精度问题，对应Java的BigDecimal
+		Amount:            "600.00",          // 使用string避免精度问题，对应Java的BigDecimal
 		CustomerIp:        "123.123.123.123", //
 		CustomerFirstName: "John",
 		CustomerLastName:  "Doe",
