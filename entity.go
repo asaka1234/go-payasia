@@ -14,14 +14,14 @@ type PayAsiaInitParams struct {
 
 // PayAsiaDepositReq
 type PayAsiaDepositReq struct {
-	MerchantReference string  `json:"merchant_reference" mapstructure:"merchant_reference"` //商户的订单id
-	Currency          string  `json:"currency" mapstructure:"currency"`
-	Amount            float64 `json:"amount" mapstructure:"amount"` // 使用string避免精度问题，对应Java的BigDecimal
-	CustomerIp        string  `json:"customer_ip" mapstructure:"customer_ip"`
-	CustomerFirstName string  `json:"customer_first_name" mapstructure:"customer_first_name"`
-	CustomerLastName  string  `json:"customer_last_name" mapstructure:"customer_last_name"`
-	CustomerPhone     string  `json:"customer_phone" mapstructure:"customer_phone"`
-	CustomerEmail     string  `json:"customer_email" mapstructure:"customer_email"`
+	MerchantReference string `json:"merchant_reference" mapstructure:"merchant_reference"` //商户的订单id
+	Currency          string `json:"currency" mapstructure:"currency"`
+	Amount            string `json:"amount" mapstructure:"amount"` // 使用string避免精度问题，对应Java的BigDecimal
+	CustomerIp        string `json:"customer_ip" mapstructure:"customer_ip"`
+	CustomerFirstName string `json:"customer_first_name" mapstructure:"customer_first_name"`
+	CustomerLastName  string `json:"customer_last_name" mapstructure:"customer_last_name"`
+	CustomerPhone     string `json:"customer_phone" mapstructure:"customer_phone"`
+	CustomerEmail     string `json:"customer_email" mapstructure:"customer_email"`
 
 	//这四个字段都不用客户传了. 前2个sdk直接补充设置. 最后一个sdk计算后补充
 	//Network string `json:"network"` //值是写死的 DirectDebit
