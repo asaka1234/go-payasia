@@ -33,16 +33,16 @@ type PayAsiaDepositReq struct {
 //------------------------------------------------------------
 
 type PayAsiaWithdrawReq struct {
-	RequestReference     string  `json:"request_reference" mapstructure:"request_reference"`
-	BeneficiaryName      string  `json:"beneficiary_name" mapstructure:"beneficiary_name"`
-	BeneficiaryFirstName string  `json:"beneficiary_first_name" mapstructure:"beneficiary_first_name"`
-	BeneficiaryLastName  string  `json:"beneficiary_last_name" mapstructure:"beneficiary_last_name"`
-	BankName             string  `json:"bank_name" mapstructure:"bank_name"`
-	BeneficiaryEmail     string  `json:"beneficiary_email" mapstructure:"beneficiary_email"`
-	BeneficiaryPhone     string  `json:"beneficiary_phone" mapstructure:"beneficiary_phone"`
-	AccountNumber        string  `json:"account_number" mapstructure:"account_number"`
-	Currency             string  `json:"currency" mapstructure:"currency"`
-	Amount               float64 `json:"amount" mapstructure:"amount"`
+	RequestReference     string `json:"request_reference" mapstructure:"request_reference"`
+	BeneficiaryName      string `json:"beneficiary_name" mapstructure:"beneficiary_name"`
+	BeneficiaryFirstName string `json:"beneficiary_first_name" mapstructure:"beneficiary_first_name"`
+	BeneficiaryLastName  string `json:"beneficiary_last_name" mapstructure:"beneficiary_last_name"`
+	BankName             string `json:"bank_name" mapstructure:"bank_name"`
+	BeneficiaryEmail     string `json:"beneficiary_email" mapstructure:"beneficiary_email"`
+	BeneficiaryPhone     string `json:"beneficiary_phone" mapstructure:"beneficiary_phone"`
+	AccountNumber        string `json:"account_number" mapstructure:"account_number"`
+	Currency             string `json:"currency" mapstructure:"currency"`
+	Amount               string `json:"amount" mapstructure:"amount"`
 
 	//这三个字段都不用客户传了. 前2个sdk直接补充设置. 最后一个sdk计算后补充
 	//DatafeedUrl          string `json:"datafeed_url"` //回调url
