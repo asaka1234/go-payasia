@@ -20,20 +20,11 @@ func Sign(paramMap map[string]interface{}, accessKey string) string {
 	var sb strings.Builder
 	for index, k := range keys {
 		value := cast.ToString(paramMap[k])
-		if k != "sign" && value != "" {
-			//只有非空才可以参与签名
-			if index != len(paramMap)-1 {
-				//不是最后一个,则拼接
-				sb.WriteString(fmt.Sprintf("%s=%s&", k, value))
-			} else {
-				sb.WriteString(fmt.Sprintf("%s=%s", k, value))
-			}
-			//sb.WriteString(fmt.Sprintf("%s=%s&", k, value))
-		}
+		sb.WriteString(fmt.Sprintf("%s=%s&", k, value))
 	}
 	sb.WriteString(accessKey)
 	queryString := sb.String()
-
+	queryString := strings.TrimSuffix(queryString, "&")
 	fmt.Printf("[rawString]%s\n", queryString)
 
 	//4. 计算签名
