@@ -18,6 +18,7 @@ func (cli *Client) Deposit(req PayAsiaDepositReq) (map[string]interface{}, error
 	signStr := utils.Sign(paramMap, cli.Params.AccessKey)
 	paramMap["sign"] = signStr
 	paramMap["url"] = cli.Params.DepositUrl //实际前端post from action的地址
-
+	paramMap["paySendPost"] = true
+	
 	return paramMap, nil
 }
