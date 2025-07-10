@@ -43,13 +43,15 @@ func (cli *Client) Withdraw(req PayAsiaWithdrawReq) (*PayAsiaWithdrawResponse, e
 		return nil, fmt.Errorf("%v, body:%s", resp.Error(), resp.Body())
 	}
 
-	if result.Response.Code == "200" {
-		//说明请求成功了
-		var payload PayAsiaWithdrawResponsePayload
-		mapstructure.Decode(result.Payload, &payload)
-		//转为struct
-		result.PayloadOptimize = payload
+	//说明ajax请求失败了
+	if result.Response.Code != "200" {
+		return nil, fmt.Errorf("code=%s", result.Response.Code)
 	}
-	
+
+	//说明请求成功了
+	var payload PayAsiaWithdrawResponsePayload
+	mapstructure.Decode(result.Payload, &payload)
+	result.PayloadOptimize = payload
+
 	return &result, nil
 }
