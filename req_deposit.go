@@ -6,9 +6,9 @@ import (
 )
 
 // 并不需要发Hhtp请求出去,纯粹是一个计算签名
-func (cli *Client) Deposit(req PayAsiaDepositReq) (map[string]interface{}, error) {
+func (cli *Client) Deposit(req PayAsiaDepositReq) (map[string]string, error) {
 
-	var paramMap map[string]interface{}
+	var paramMap map[string]string
 	mapstructure.Decode(req, &paramMap)
 
 	//补充公共字段

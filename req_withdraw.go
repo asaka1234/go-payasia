@@ -1,13 +1,16 @@
 package go_payasia
 
 import (
+	"crypto/tls"
+	"fmt"
 	"github.com/asaka1234/go-payasia/utils"
 	"github.com/mitchellh/mapstructure"
 )
 
-// 并不需要发Hhtp请求出去,纯粹是一个计算签名
-func (cli *Client) Withdraw(req PayAsiaWithdrawReq) (map[string]interface{}, error) {
-	var paramMap map[string]interface{}
+func (cli *Client) Withdraw(req PayAsiaWithdrawReq) (*PayAsiaWithdrawResponse, error) {
+	rawURL := cli.Params.WithdrawUrl
+
+	var paramMap map[string]string
 	mapstructure.Decode(req, &paramMap)
 
 	//补充公共字段
@@ -15,7 +18,38 @@ func (cli *Client) Withdraw(req PayAsiaWithdrawReq) (map[string]interface{}, err
 
 	signStr := utils.Sign(paramMap, cli.Params.AccessKey)
 	paramMap["sign"] = signStr
-	paramMap["url"] = cli.Params.WithdrawUrl //实际前端post from action的地址
 
-	return paramMap, nil
+	//-----构造一个form表单------------
+	var result PayAsiaWithdrawResponse
+	resp, err := cli.ryClient.SetTLSClientConfig(&tls.Config{InsecureSkipVerify: true}).
+		SetCloseConnection(true).
+		R().
+		SetHeaders(getHeaders()).
+		SetFormData(paramMap).
+		SetDebug(cli.debugMode).
+		SetResult(&result).
+		Post(rawURL)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if resp.StatusCode() != 200 {
+		return nil, fmt.Errorf("status code: %d", resp.StatusCode())
+	}
+
+	if resp.Error() != nil {
+		//反序列化错误会在此捕捉
+		return nil, fmt.Errorf("%v, body:%s", resp.Error(), resp.Body())
+	}
+
+	if result.Response.Code == "200" {
+		//说明请求成功了
+		var payload PayAsiaWithdrawResponsePayload
+		mapstructure.Decode(result.Payload, &payload)
+		//转为struct
+		result.PayloadOptimize = payload
+	}
+	
+	return &result, nil
 }

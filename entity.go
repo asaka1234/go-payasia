@@ -33,12 +33,12 @@ type PayAsiaDepositReq struct {
 //------------------------------------------------------------
 
 type PayAsiaWithdrawReq struct {
-	RequestReference     string `json:"request_reference" mapstructure:"request_reference"`
-	BeneficiaryName      string `json:"beneficiary_name" mapstructure:"beneficiary_name"`
-	BeneficiaryFirstName string `json:"beneficiary_first_name" mapstructure:"beneficiary_first_name"`
-	BeneficiaryLastName  string `json:"beneficiary_last_name" mapstructure:"beneficiary_last_name"`
-	BankName             string `json:"bank_name" mapstructure:"bank_name"`
-	BeneficiaryEmail     string `json:"beneficiary_email" mapstructure:"beneficiary_email"`
+	RequestReference     string `json:"request_reference" mapstructure:"request_reference"`           //Unique order reference
+	BeneficiaryName      string `json:"beneficiary_name" mapstructure:"beneficiary_name"`             //Recipient full name of the account owner
+	BeneficiaryFirstName string `json:"beneficiary_first_name" mapstructure:"beneficiary_first_name"` //first name
+	BeneficiaryLastName  string `json:"beneficiary_last_name" mapstructure:"beneficiary_last_name"`   //last name
+	BankName             string `json:"bank_name" mapstructure:"bank_name"`                           //bank code
+	BeneficiaryEmail     string `json:"beneficiary_email" mapstructure:"beneficiary_email"`           //recipient email of the account              owner
 	BeneficiaryPhone     string `json:"beneficiary_phone" mapstructure:"beneficiary_phone"`
 	AccountNumber        string `json:"account_number" mapstructure:"account_number"`
 	Currency             string `json:"currency" mapstructure:"currency"`
@@ -48,6 +48,26 @@ type PayAsiaWithdrawReq struct {
 	//DatafeedUrl          string `json:"datafeed_url"` //回调url
 	//Url  string `json:"url"` //请求url,是form表单action提交时的具体url (该参数不参与sign计算)
 	//Sign string `json:"sign"`
+}
+
+// 出金返回
+type PayAsiaWithdrawResponse struct {
+	Request struct {
+		Id   string `json:"id"`   //是psp的order id
+		Time string `json:"time"` //unix时间戳
+	} `json:"request"`
+	Response struct {
+		Code    string `json:"code"` //200 是psp收到请求了
+		Message string `json:"message"`
+		Time    string `json:"time"` //unix时间戳
+	} `json:"response"`
+	Payload         interface{}                    `json:"payload"`
+	PayloadOptimize PayAsiaWithdrawResponsePayload `json:"payloadOptimize"` //补充字段
+}
+
+type PayAsiaWithdrawResponsePayload struct {
+	RequestReference string `json:"request_reference" mapstructure:"request_reference"` //请求时传参的原样返回
+	Status           string `json:"status" mapstructure:"status"`                       // 0->PENDING, 1->SUCCESS, 2->FAIL, 3->AUTHORIZED, 4->PROCESSING, 8->CANCELLED
 }
 
 // ---------------callback-----------------------
