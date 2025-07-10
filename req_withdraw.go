@@ -5,12 +5,13 @@ import (
 	"fmt"
 	"github.com/asaka1234/go-payasia/utils"
 	"github.com/mitchellh/mapstructure"
+	"github.com/spf13/cast"
 )
 
 func (cli *Client) Withdraw(req PayAsiaWithdrawReq) (*PayAsiaWithdrawResponse, error) {
 	rawURL := cli.Params.WithdrawUrl
 
-	var paramMap map[string]string
+	var paramMap map[string]interface{}
 	mapstructure.Decode(req, &paramMap)
 
 	//补充公共字段
@@ -25,7 +26,7 @@ func (cli *Client) Withdraw(req PayAsiaWithdrawReq) (*PayAsiaWithdrawResponse, e
 		SetCloseConnection(true).
 		R().
 		SetHeaders(getHeaders()).
-		SetFormData(paramMap).
+		SetFormData(ConvertInterfaceMapToStringMap(paramMap)).
 		SetDebug(cli.debugMode).
 		SetResult(&result).
 		Post(rawURL)
@@ -54,4 +55,12 @@ func (cli *Client) Withdraw(req PayAsiaWithdrawReq) (*PayAsiaWithdrawResponse, e
 	result.PayloadOptimize = payload
 
 	return &result, nil
+}
+
+func ConvertInterfaceMapToStringMap(m map[string]interface{}) map[string]string {
+	result := make(map[string]string)
+	for k, v := range m {
+		result[k] = cast.ToString(v)
+	}
+	return result
 }

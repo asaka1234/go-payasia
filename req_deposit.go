@@ -6,9 +6,9 @@ import (
 )
 
 // 并不需要发Hhtp请求出去,纯粹是一个计算签名
-func (cli *Client) Deposit(req PayAsiaDepositReq) (map[string]string, error) {
+func (cli *Client) Deposit(req PayAsiaDepositReq) (map[string]interface{}, error) {
 
-	var paramMap map[string]string
+	var paramMap map[string]interface{}
 	mapstructure.Decode(req, &paramMap)
 
 	//补充公共字段
@@ -19,6 +19,6 @@ func (cli *Client) Deposit(req PayAsiaDepositReq) (map[string]string, error) {
 	paramMap["sign"] = signStr
 	paramMap["url"] = cli.Params.DepositUrl //实际前端post from action的地址
 	paramMap["paySendPost"] = true
-	
+
 	return paramMap, nil
 }

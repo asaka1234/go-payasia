@@ -9,7 +9,7 @@ import (
 )
 
 // 计算请求签名
-func Sign(paramMap map[string]string, accessKey string) string {
+func Sign(paramMap map[string]interface{}, accessKey string) string {
 
 	keys := lo.Keys(paramMap)
 

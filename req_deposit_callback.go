@@ -10,7 +10,7 @@ import (
 // 充值的回调处理(传入一个处理函数)
 func (cli *Client) DepositCallback(req PayAsiaDepositBackReq, processor func(PayAsiaDepositBackReq) error) error {
 	//验证
-	var paramMap map[string]string
+	var paramMap map[string]interface{}
 	mapstructure.Decode(req, &paramMap)
 
 	sign := paramMap["sign"] //收到的签名

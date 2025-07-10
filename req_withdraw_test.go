@@ -21,7 +21,7 @@ func TestWithdraw(t *testing.T) {
 
 func GenPayAsiaWithdrawReqDemo() PayAsiaWithdrawReq {
 	return PayAsiaWithdrawReq{
-		RequestReference:     "2021507184802615711", //商户的orderId
+		RequestReference:     "20215071848202615711", //商户的orderId
 		BeneficiaryName:      "john wong",
 		BeneficiaryFirstName: "john",
 		BeneficiaryLastName:  "wong",

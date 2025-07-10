@@ -21,7 +21,7 @@ func TestDepositCallback(t *testing.T) {
 		Sign:              "5d9a711dcc98b5e7b34560019a09b88637ba733556ba702af7f748ee9162297c98a622b1685d9c5392e00c1e2b8253d5fb65228dc30703942aa312b0d3f358f2",
 	}
 	//验证
-	var paramMap map[string]string
+	var paramMap map[string]interface{}
 	mapstructure.Decode(req, &paramMap)
 
 	sign := paramMap["sign"] //收到的签名
