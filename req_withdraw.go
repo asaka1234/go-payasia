@@ -5,11 +5,21 @@ import (
 	"fmt"
 	"github.com/asaka1234/go-payasia/utils"
 	"github.com/mitchellh/mapstructure"
+	"github.com/samber/lo"
 	"github.com/spf13/cast"
 )
 
 func (cli *Client) Withdraw(req PayAsiaWithdrawReq) (*PayAsiaWithdrawResponse, error) {
 	rawURL := cli.Params.WithdrawUrl
+
+	//----------------------判断bank code的正确性------------------
+	_, ok := lo.Find(PayAsiaBankCodes, func(i PayAsiaBankCode) bool {
+		return i.Code == req.BankName
+	})
+	if !ok {
+		return nil, fmt.Errorf("bank code %s error", req.BankName)
+	}
+	//---------------------------------------------------------
 
 	var paramMap map[string]interface{}
 	mapstructure.Decode(req, &paramMap)
