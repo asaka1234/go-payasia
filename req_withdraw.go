@@ -14,7 +14,7 @@ func (cli *Client) Withdraw(req PayAsiaWithdrawReq) (*PayAsiaWithdrawResponse, e
 
 	//----------------------判断bank code的正确性------------------
 	_, ok := lo.Find(PayAsiaBankCodes, func(i PayAsiaBankCode) bool {
-		return i.Code == req.BankName
+		return i.Code == req.BankName && i.Currency == req.Currency
 	})
 	if !ok {
 		return nil, fmt.Errorf("bank code %s error", req.BankName)
