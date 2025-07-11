@@ -4,14 +4,22 @@ import (
 	"errors"
 	"fmt"
 	"github.com/asaka1234/go-payasia/utils"
-	"github.com/mitchellh/mapstructure"
+	"net/url"
 )
 
 // 提现的回调处理(传入一个处理函数)
-func (cli *Client) WithdrawCallback(req PayAsiaWithdrawBackReq, processor func(PayAsiaWithdrawBackReq) error) error {
-	//验证签名
-	var paramMap map[string]interface{}
-	mapstructure.Decode(req, &paramMap)
+func (cli *Client) WithdrawCallback(body string, req PayAsiaWithdrawBackReq, processor func(PayAsiaWithdrawBackReq) error) error {
+	//不能用req这个结构体, 因为它的签名不过滤value为null/""的key,导致三方传参我们是无法判断的
+
+	values, _ := url.ParseQuery(body)
+	// 转换为单值 map
+	paramMap := make(map[string]interface{})
+	for key, val := range values {
+		if len(val) > 0 {
+			paramMap[key] = val[0]
+		}
+	}
+	//-----------------------------
 
 	sign := paramMap["sign"] //收到的签名
 	delete(paramMap, "sign")
